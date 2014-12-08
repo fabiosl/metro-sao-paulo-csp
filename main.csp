@@ -1,1 +1,35 @@
-main.csp
+-- Como fazer um fluxo de alguém saindo de tucuruvi e indo para trianon-masp?
+
+channel tucuruvi,parada_inglesa,jardim_sao_paulo_ayrton_senna,santana,carandiru,portuguesa_tiete,armenia,tiradentes,luz,sao_bento,se,liberdade,sao_joaquim,vergueiro,paraiso,ana_rosa,vila_mariana,santa_cruz,praca_da_arvore,saude,sao_judas,conceicao,jabaquara,zoologico,diadema,morumbi,piraporinha,sao_bernardo ,ferrazopolis,santo_andre,sonia_maria,sao_mateus,vila_prudente,tamanduatei,sacoma,alto_do_ipiranga,santos_imigrantes,chacara_klabin,brigadeiro,trianon_masp,consolacao,paulista,clinicas,sumare,vila_madalena
+
+
+estacoes_linha_1_azul={tucuruvi,parada_inglesa,jardim_sao_paulo_ayrton_senna,santana,carandiru,portuguesa_tiete,armenia,tiradentes,luz,sao_bento,se,liberdade,sao_joaquim,vergueiro,paraiso,ana_rosa ,vila_mariana,santa_cruz,praca_da_arvore,saude,sao_judas,conceicao,jabaquara,zoologico,diadema}
+
+estacoes_linha_2_verde={vila_prudente,tamanduatei,sacoma,alto_do_ipiranga,santos_imigrantes,chacara_klabin,ana_rosa,paraiso,brigadeiro,trianon_masp,consolacao,paulista,clinicas,sumare,vila_madalena}
+
+
+
+LINHA_1_AZUL_TOWARDS_DIADEMA = tucuruvi->parada_inglesa->jardim_sao_paulo_ayrton_senna->santana->carandiru->portuguesa_tiete->armenia->tiradentes->luz->sao_bento->se->liberdade->sao_joaquim->vergueiro->paraiso->ana_rosa ->vila_mariana->santa_cruz->praca_da_arvore->saude->sao_judas->conceicao->jabaquara->zoologico->diadema->LINHA_1_AZUL_TOWARDS_TUCURUVI
+
+LINHA_1_AZUL_TOWARDS_TUCURUVI =diadema->zoologico->jabaquara->conceicao->sao_judas->saude->praca_da_arvore->santa_cruz->vila_mariana->ana_rosa->paraiso->vergueiro->sao_joaquim->liberdade->se->sao_bento->luz->tiradentes-> armenia->portuguesa_tiete->carandiru->santana-> parada_inglesa->jardim_sao_paulo_ayrton_senna->tucuruvi->LINHA_1_AZUL_TOWARDS_DIADEMA
+
+LINHA_2_VERDE_TOWARDS_VILA_PRUDENTE = vila_madalena->sumare->clinicas->paulista->consolacao ->trianon_masp->brigadeiro ->CROSS_DEADLOCK-> chacara_klabin->santos_imigrantes ->alto_do_ipiranga->sacoma->tamanduatei ->vila_prudente ->LINHA_2_VERDE_TOWARDS_VILA_MADALENA
+
+LINHA_2_VERDE_TOWARDS_VILA_MADALENA = vila_prudente->tamanduatei->sacoma->alto_do_ipiranga->santos_imigrantes->chacara_klabin -> CROSS_DEADLOCK ->brigadeiro->trianon_masp->consolacao ->paulista->clinicas->sumare->vila_madalena->LINHA_2_VERDE_TOWARDS_VILA_PRUDENTE
+
+CROSS_DEADLOCK = (ana_rosa->paraiso) [] (paraiso->ana_rosa)
+
+
+
+PROCESSO_N_LINHAS_POR_ESTACAO = LINHA_1_AZUL_TOWARDS_DIADEMA ||| LINHA_1_AZUL_TOWARDS_TUCURUVI ||| LINHA_2_VERDE_TOWARDS_VILA_MADALENA ||| LINHA_2_VERDE_TOWARDS_VILA_PRUDENTE
+PROCESSO_UMA_LINHA_POR_ESTACAO = LINHA_1_AZUL_TOWARDS_DIADEMA [{estacoes_linha_1_azul}||estacoes_linha_2_verde] LINHA_2_VERDE_TOWARDS_VILA_MADALENA
+
+assert PROCESSO_N_LINHAS_POR_ESTACAO :[deadlock free]
+assert PROCESSO_UMA_LINHA_POR_ESTACAO :[deadlock free]
+
+
+
+
+
+--assert PROCESSO :[deadlock free]
+-- Tambem tem a possibilidade de modelar cada estacao como um processo?

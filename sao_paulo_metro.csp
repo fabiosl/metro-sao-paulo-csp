@@ -1,0 +1,317 @@
+--All metro stations are listed below as channels.
+channel adolfo_pinheiro, agua_branca, alto_do_ipiranga, amador_bueno, ana_rosa, anhangabau, antonio_gianetti_neto, antonio_joao, aracare, armenia, arthur_alvim, autodromo, baltazar_fidelis, barueri, belem, berrini, botujuru, bras, braz_cubas, bresser_mooca, brigadeiro, butanta, caieiras, calmon_viana, campo_limpo, campo_limpo_paulista, capao_redondo, capuava, carandiru, carapicuiba, carrao, ceasa, chacara_klabin, cidade_jardim, cidade_universitaria, clinicas, com_sampaio, comendador_ermelino, conceicao, consolacao, corinthians_itaquera, diadema, dom_bosco, domingos_de_moraes, eng_cardoso, eng_goulart, eng_manoel_feio, estudantes, faria_lima, ferraz_de_vasconcelos, fradique_coutinho, francisco_morato, franco_da_rocha, gen_miguel_costa, giovanni_gronchi, grajau, granja_julieta, guaianases, guapituba, guilhermina_esperanca, hebraica_reboucas, imperatriz_leopoldina, ipiranga, itaim_paulista, itapevi, itaquaquecetuba, jabaquara, jandira, jaragua, jardim_belval, jardim_helena_vila_mara, jardim_romano, jardim_sao_paulo_ayrton_senna, jardim_silveira, jose_bonifacio, julio_prestes, jundiai, jundiapeba, jurubatuba, lapa, largo_treze, liberdade, luz, mal_deodoro, maua, mogi_das_cruzes, mooca, morumbi, oratorio, osasco, palmeiras_barra_funda, parada_inglesa, paraiso, patriarca, paulista, pedro_ii, penha, perus, pinheiros, piqueri, pirituba, poa, portuguesa_tiete, praca_da_arvore, prefeito_saladino, pres_altino, primavera_interlagos, quitauna, republica, ribeirao_pires, rio_grande_da_serra, sacoma, sagrado_coracao, santa_cecilia, santa_cruz, santa_rita, santa_terezinha, santana, santo_amaro, santo_andre, santos_imigrantes, sao_bento, sao_caetano, sao_joaquim, sao_judas, sao_miguel_paulista, saude, se, socorro, sumare, suzano, tamanduatei, tatuape, tiradentes, trianon_masp, tucuruvi, usp_leste, utinga, varzea_paulista, vergueiro, vila_aurora, vila_clarice, vila_das_belezas, vila_madalena, vila_mariana, vila_matilde, vila_olimpia, vila_prudente, villa_lobos_jaguare, zoologico
+
+--All the metro lines
+channel linha_1,linha_2,linha_3,linha_4,linha_5,linha_6,linha_7,linha_8,linha_9,linha_10,linha_11,linha_12,linha_13,linha_14,linha_15
+
+
+--An impossible to reach state. Just to make sure that there are no mistakes on the processes. 
+channel impossible_state_reached
+
+line_1_stations={tucuruvi,parada_inglesa,jardim_sao_paulo_ayrton_senna,santana,carandiru,portuguesa_tiete,armenia,tiradentes,luz,sao_bento,se,liberdade,sao_joaquim,vergueiro,paraiso,ana_rosa,vila_mariana,santa_cruz,praca_da_arvore,saude,sao_judas,conceicao,jabaquara,zoologico,diadema}
+line_2_stations={vila_prudente,tamanduatei,sacoma,alto_do_ipiranga,santos_imigrantes,chacara_klabin,ana_rosa,paraiso,brigadeiro,trianon_masp,consolacao,paulista,clinicas,sumare,vila_madalena}
+line_3_stations={corinthians_itaquera,arthur_alvim,patriarca,guilhermina_esperanca,vila_matilde,penha,carrao,tatuape,belem,bresser_mooca,bras,pedro_ii,se,anhangabau,republica,santa_cecilia,mal_deodoro,palmeiras_barra_funda}
+line_4_stations={butanta,pinheiros,faria_lima,fradique_coutinho,consolacao,paulista,republica,luz}
+line_5_stations={capao_redondo,campo_limpo,vila_das_belezas,giovanni_gronchi,santo_amaro,largo_treze,adolfo_pinheiro}
+line_7_stations={jundiai,varzea_paulista,campo_limpo_paulista,botujuru,francisco_morato,baltazar_fidelis,franco_da_rocha,caieiras,perus,vila_aurora,jaragua,vila_clarice,pirituba,piqueri,lapa,agua_branca,palmeiras_barra_funda,luz}
+line_8_stations={amador_bueno,santa_rita,itapevi,eng_cardoso,sagrado_coracao,jandira,jardim_silveira,jardim_belval,barueri,antonio_joao,santa_terezinha,carapicuiba,gen_miguel_costa,quitauna,com_sampaio,osasco,pres_altino,imperatriz_leopoldina,domingos_de_moraes,lapa,palmeiras_barra_funda,julio_prestes}
+line_9_stations={grajau,primavera_interlagos,autodromo,jurubatuba,socorro,santo_amaro,granja_julieta,morumbi,berrini,vila_olimpia,cidade_jardim,hebraica_reboucas,pinheiros,cidade_universitaria,villa_lobos_jaguare,ceasa,pres_altino,osasco}
+line_10_stations={rio_grande_da_serra,ribeirao_pires,guapituba,maua,capuava,santo_andre,prefeito_saladino,utinga,sao_caetano,tamanduatei,ipiranga,mooca,bras}
+line_11_stations={estudantes,mogi_das_cruzes,braz_cubas,jundiapeba,suzano,calmon_viana,poa,ferraz_de_vasconcelos,antonio_gianetti_neto,guaianases,jose_bonifacio,dom_bosco,corinthians_itaquera,tatuape,bras,luz}
+line_12_stations={calmon_viana,aracare,itaquaquecetuba,eng_manoel_feio,jardim_romano,itaim_paulista,jardim_helena_vila_mara,sao_miguel_paulista,comendador_ermelino,usp_leste,eng_goulart,tatuape,bras}
+line_15_stations={oratorio,vila_prudente}
+
+TUCURUVI(line,direction) = 	if line==linha_1 and direction==diadema then
+									parada_inglesa -> PARADA_INGLESA(line,direction)
+								else if line==linha_1 and direction == tucuruvi then  
+									TUCURUVI(linha_1,diadema)
+								else 
+									impossible_state_reached -> STOP
+
+
+PARADA_INGLESA(line,direction) = 	if line==linha_1 and direction==diadema then
+									jardim_sao_paulo_ayrton_senna -> JARDIM_SAO_PAULO_AYRTON_SENNA(line,direction)
+								else if line==linha_1 and direction == tucuruvi then
+									tucuruvi -> TUCURUVI(line,direction)
+								else 
+									impossible_state_reached -> STOP
+
+JARDIM_SAO_PAULO_AYRTON_SENNA(line,direction) = 	if line==linha_1 and direction==diadema then
+									santana -> SANTANA(line,direction)
+								else if line==linha_1 and direction == tucuruvi then
+									parada_inglesa -> PARADA_INGLESA(line,direction)
+								else 
+									impossible_state_reached -> STOP
+
+SANTANA(line,direction) = 	if line==linha_1 and direction==diadema then
+									carandiru -> CARANDIRU(line,direction)
+								else if line==linha_1 and direction == tucuruvi then
+									jardim_sao_paulo_ayrton_senna -> JARDIM_SAO_PAULO_AYRTON_SENNA(line,direction)
+								else 
+									impossible_state_reached -> STOP
+
+CARANDIRU(line,direction) = 	if line==linha_1 and direction==diadema then
+									portuguesa_tiete -> PORTUGUESA_TIETE(line,direction)
+								else if line==linha_1 and direction == tucuruvi then
+									santana -> SANTANA(line,direction)
+								else 
+									impossible_state_reached -> STOP
+
+PORTUGUESA_TIETE(line,direction) = 	if line==linha_1 and direction==diadema then
+									armenia -> ARMENIA(line,direction)
+								else if line==linha_1 and direction == tucuruvi then
+									carandiru -> CARANDIRU(line,direction)
+								else 
+									impossible_state_reached -> STOP
+
+ARMENIA(line,direction) = 	if line==linha_1 and direction==diadema then
+									tiradentes -> TIRADENTES(line,direction)
+								else if line==linha_1 and direction == tucuruvi then
+									portuguesa_tiete -> PORTUGUESA_TIETE(line,direction)
+								else 
+									impossible_state_reached -> STOP
+
+TIRADENTES(line,direction) = 	if line==linha_1 and direction==diadema then
+									luz -> LUZ(line,direction)
+								else if line==linha_1 and direction == tucuruvi then
+									armenia -> ARMENIA(line,direction)
+								else 
+									impossible_state_reached -> STOP
+
+LUZ(line,direction) = 	if line==linha_1 and direction==diadema then
+									sao_bento -> SAO_BENTO(line,direction)
+								else if line==linha_1 and direction == tucuruvi then
+									tiradentes -> TIRADENTES(line,direction)
+								else 
+									impossible_state_reached -> STOP
+
+SAO_BENTO(line,direction) = 	if line==linha_1 and direction==diadema then
+									se -> SE(line,direction)
+								else if line==linha_1 and direction == tucuruvi then
+									luz -> LUZ(line,direction)
+								else 
+									impossible_state_reached -> STOP
+
+SE(line,direction) = 	if line==linha_1 and direction==diadema then
+									liberdade -> LIBERDADE(line,direction)
+								else if line==linha_1 and direction == tucuruvi then
+									sao_bento -> SAO_BENTO(line,direction)
+								else 
+									impossible_state_reached -> STOP
+
+LIBERDADE(line,direction) = 	if line==linha_1 and direction==diadema then
+									sao_joaquim -> SAO_JOAQUIM(line,direction)
+								else if line==linha_1 and direction == tucuruvi then
+									se -> SE(line,direction)
+								else 
+									impossible_state_reached -> STOP
+
+SAO_JOAQUIM(line,direction) = 	if line==linha_1 and direction==diadema then
+									vergueiro -> VERGUEIRO(line,direction)
+								else if line==linha_1 and direction == tucuruvi then
+									liberdade -> LIBERDADE(line,direction)
+								else 
+									impossible_state_reached -> STOP
+
+VERGUEIRO(line,direction) = 	if line==linha_1 and direction==diadema then
+									paraiso -> PARAISO(line,direction)
+								else if line==linha_1 and direction == tucuruvi then
+									sao_joaquim -> SAO_JOAQUIM(line,direction)
+								else 
+									impossible_state_reached -> STOP
+
+
+VILA_MARIANA(line,direction) = if line==linha_1 and direction==diadema then
+									santa_cruz -> SANTA_CRUZ(line,direction)
+								else if line==linha_1 and direction == tucuruvi then
+									ana_rosa -> ANA_ROSA(line,direction)
+								else 
+									impossible_state_reached -> STOP
+
+SANTA_CRUZ(line,direction) = 	if line==linha_1 and direction==diadema then
+									praca_da_arvore -> PRACA_DA_ARVORE(line,direction)
+								else if line==linha_1 and direction == tucuruvi then
+									vila_mariana -> VILA_MARIANA(line,direction)
+								else 
+									impossible_state_reached -> STOP
+
+PRACA_DA_ARVORE(line,direction) = 	if line==linha_1 and direction==diadema then
+									saude -> SAUDE(line,direction)
+								else if line==linha_1 and direction == tucuruvi then
+									santa_cruz -> SANTA_CRUZ(line,direction)
+								else 
+									impossible_state_reached -> STOP
+
+SAUDE(line,direction) = 	if line==linha_1 and direction==diadema then
+									sao_judas -> SAO_JUDAS(line,direction)
+								else if line==linha_1 and direction == tucuruvi then
+									praca_da_arvore -> PRACA_DA_ARVORE(line,direction)
+								else 
+									impossible_state_reached -> STOP
+
+SAO_JUDAS(line,direction) = 	if line==linha_1 and direction==diadema then
+									conceicao -> CONCEICAO(line,direction)
+								else if line==linha_1 and direction == tucuruvi then
+									saude -> SAUDE(line,direction)
+								else 
+									impossible_state_reached -> STOP
+
+CONCEICAO(line,direction) = 	if line==linha_1 and direction==diadema then
+									jabaquara -> JABAQUARA(line,direction)
+								else if line==linha_1 and direction == tucuruvi then
+									sao_judas -> SAO_JUDAS(line,direction)
+								else 
+									impossible_state_reached -> STOP
+
+JABAQUARA(line,direction) = 	if line==linha_1 and direction==diadema then
+									zoologico -> ZOOLOGICO(line,direction)
+								else if line==linha_1 and direction == tucuruvi then
+									conceicao -> CONCEICAO(line,direction)
+								else 
+									impossible_state_reached -> STOP
+
+ZOOLOGICO(line,direction) = 	if line==linha_1 and direction==diadema then
+									diadema -> DIADEMA(line,direction)
+								else if line==linha_1 and direction == tucuruvi then
+									jabaquara -> JABAQUARA(line,direction)
+								else 
+									impossible_state_reached -> STOP
+
+DIADEMA(line,direction) = 	if line==linha_1 and direction==diadema then
+									DIADEMA(linha_1,tucuruvi)
+								else if line==linha_1 and direction == tucuruvi then
+									zoologico -> ZOOLOGICO(line,direction)
+								else 
+									impossible_state_reached -> STOP
+
+
+
+
+
+-- line 2
+
+VILA_MADALENA(line,direction) = 
+									if line==linha_2 and direction==vila_madalena then
+										 VILA_MADALENA(linha_2,vila_prudente) 
+									else if line==linha_2 and direction == vila_prudente then 
+							 			sumare -> SUMARE(line,direction)
+								 	else 
+								 		impossible_state_reached -> STOP
+SUMARE(line,direction) = 
+									if line==linha_2 and direction==vila_madalena then
+										 vila_madalena -> VILA_MADALENA(line,direction) 
+								 	else if line==linha_2 and direction == vila_prudente then  
+								 		clinicas -> CLINICAS(line,direction)
+						 			else 
+						 				impossible_state_reached -> STOP
+CLINICAS(line,direction) = 
+									if line==linha_2 and direction==vila_madalena then
+										 sumare -> SUMARE(line,direction) 
+								 	else if line==linha_2 and direction == vila_prudente then  
+								 		paulista -> PAULISTA(line,direction)
+						 			else 
+						 				impossible_state_reached -> STOP
+PAULISTA(line,direction) = 
+									if line==linha_2 and direction==vila_madalena then
+										 clinicas -> CLINICAS(line,direction) 
+								 	else if line==linha_2 and direction == vila_prudente then  
+								 		consolacao -> CONSOLACAO(line,direction)
+						 			else 
+						 				impossible_state_reached -> STOP
+CONSOLACAO(line,direction) = 
+									if line==linha_2 and direction==vila_madalena then
+										  paulista -> PAULISTA(line,direction) 
+								  	else if line==linha_2 and direction == vila_prudente then  
+								  		trianon_masp -> TRIANON_MASP(line,direction)
+						  			else 
+						  				impossible_state_reached -> STOP
+TRIANON_MASP(line,direction) = 
+									if line==linha_2 and direction==vila_madalena then
+										 consolacao -> CONSOLACAO(line,direction) 
+								 	else if line==linha_2 and direction == vila_prudente then  
+								 		brigadeiro -> BRIGADEIRO(line,direction)
+						 			else 
+						 				impossible_state_reached -> STOP
+BRIGADEIRO(line,direction) = 
+									if line==linha_2 and direction==vila_madalena then
+										 trianon_masp -> TRIANON_MASP(line,direction) 
+								 	else if line==linha_2 and direction == vila_prudente then  
+								 		paraiso -> PARAISO(line,direction)
+						 			else 
+						 				impossible_state_reached -> STOP
+
+CHACARA_KLABIN(line,direction) = 
+									if line==linha_2 and direction==vila_madalena then
+										 ana_rosa -> ANA_ROSA(line,direction) 
+								 	else if line==linha_2 and direction == vila_prudente then  
+								 		santos_imigrantes -> SANTOS_IMIGRANTES(line,direction)
+						 			else 
+						 				impossible_state_reached -> STOP
+SANTOS_IMIGRANTES(line,direction) = 
+									if line==linha_2 and direction==vila_madalena then
+										 chacara_klabin -> CHACARA_KLABIN(line,direction) 
+								 	else if line==linha_2 and direction == vila_prudente then  
+								 		alto_do_ipiranga -> ALTO_DO_IPIRANGA(line,direction)
+						 			else 
+						 				impossible_state_reached -> STOP
+ALTO_DO_IPIRANGA(line,direction) = 
+									if line==linha_2 and direction==vila_madalena then
+										 santos_imigrantes -> SANTOS_IMIGRANTES(line,direction) 
+								 	else if line==linha_2 and direction == vila_prudente then 
+								 		sacoma -> SACOMA(line,direction)
+						 			else 
+						 				impossible_state_reached -> STOP
+SACOMA(line,direction) = 
+									if line==linha_2 and direction==vila_madalena then
+										 alto_do_ipiranga -> ALTO_DO_IPIRANGA(line,direction) 
+								 	else if line==linha_2 and direction == vila_prudente then  
+								 		tamanduatei -> TAMANDUATEI(line,direction)
+						 			else 
+						 				impossible_state_reached -> STOP
+TAMANDUATEI(line,direction) = 
+									if line==linha_2 and direction==vila_madalena then
+										 sacoma -> SACOMA(line,direction) 
+								 	else if line==linha_2 and direction == vila_prudente then  
+								 		vila_prudente -> VILA_PRUDENTE(line,direction)
+						 			else 
+						 				impossible_state_reached -> STOP
+VILA_PRUDENTE(line,direction) = 
+									if line==linha_2 and direction==vila_madalena then
+										 tamanduatei -> TAMANDUATEI(line,direction) 
+								 	else if line==linha_2 and direction == vila_prudente then 
+								 		VILA_PRUDENTE(linha_2, vila_madalena) 
+							 		else impossible_state_reached -> STOP
+
+
+
+
+-- SHARED RESOURCES 
+PARAISO(line,direction) = 
+									if line==linha_2 and direction==vila_madalena then
+										 brigadeiro -> BRIGADEIRO(line,direction) 
+								 	else if line==linha_2 and direction == vila_prudente then  
+								 		ana_rosa -> ANA_ROSA(line,direction)
+								 	else if line==linha_1 and direction==diadema then
+										ana_rosa -> ANA_ROSA(line,direction)
+									else if line==linha_1 and direction == tucuruvi then
+										vergueiro -> VERGUEIRO(line,direction)
+						 			else 
+						 				impossible_state_reached -> STOP
+ANA_ROSA(line,direction) = 
+									if line==linha_2 and direction==vila_madalena then
+										 paraiso -> PARAISO(line,direction) 
+								 	else if line==linha_2 and direction == vila_prudente then  
+								 		chacara_klabin -> CHACARA_KLABIN(line,direction)
+						 			else if line==linha_1 and direction==diadema then
+										vila_mariana -> VILA_MARIANA(line,direction)
+									else if line==linha_1 and direction == tucuruvi then
+										paraiso -> PARAISO(line,direction)
+						 			else 
+						 				impossible_state_reached -> STOP
+
+
+
+
+PROCESS = DIADEMA(linha_1,tucuruvi) [line_1_stations||line_2_stations] VILA_PRUDENTE(linha_2,vila_madalena)
+assert PROCESS :[deadlock free]
+assert PROCESS :[divergence free]
